@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cajonera Interactiva</title>
+    
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+      model-viewer {
+        width: 100%;
+        height: 600px;
+      }
+
+      .hotspot-button {
+        background: white;
+        border: 1px solid gray;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <model-viewer
+      id="visor"
+      src="comoda.glb"
+      camera-controls
+      autoplay
+      shadow-intensity="1"
+      ar
+      exposure="1"
+    >
+      <!-- HOTSPOTS PARA LOS CAJONES -->
+      <button class="hotspot-button" slot="hotspot-drawer1"
+        data-position="0 0.3 0.5" data-normal="0 0 1"
+        onclick="activarCajon('Drawer1')">⬆️</button>
+
+      <button class="hotspot-button" slot="hotspot-drawer2"
+        data-position="0 0.1 0.5" data-normal="0 0 1"
+        onclick="activarCajon('Drawer2')">⬆️</button>
+
+      <button class="hotspot-button" slot="hotspot-drawer3"
+        data-position="0 -0.1 0.5" data-normal="0 0 1"
+        onclick="activarCajon('Drawer3')">⬆️</button>
+    </model-viewer>
+
+    <script>
+      let abierto = null;
+
+      function activarCajon(nombre) {
+        const visor = document.getElementById('visor');
+
+        if (abierto === nombre) {
+          visor.pause();
+          abierto = null;
+        } else {
+          visor.animationName = nombre;
+          visor.currentTime = 0;
+          visor.play();
+          abierto = nombre;
+        }
+      }
+    </script>
+
+    <model-viewer src="comoda.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1" animation-name="cajon.002Action" autoplay>
+        <button class="Hotspot" slot="hotspot-1" data-surface="1 0 966 290 992 0.198 0.390 0.412" data-visibility-attribute="visible"></button><button class="Hotspot" slot="hotspot-2" data-surface="6 0 290 625 1266 0.028 0.054 0.917" data-visibility-attribute="visible"></button><button class="Hotspot" slot="hotspot-3" data-surface="5 0 290 1181 995 0.375 0.510 0.114" data-visibility-attribute="visible"></button><button class="Hotspot" slot="hotspot-4" data-surface="2 0 607 627 1399 0.852 0.091 0.057" data-visibility-attribute="visible"></button><button class="Hotspot" slot="hotspot-5" data-surface="4 0 610 626 1400 0.135 0.536 0.329" data-visibility-attribute="visible"></button><button class="Hotspot" slot="hotspot-6" data-surface="3 0 1400 626 291 0.131 0.213 0.657" data-visibility-attribute="visible"></button>
+        <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+        <button slot="ar-button" id="ar-button">
+            View in your space
+        </button>
+        <div id="ar-prompt">
+            <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
+        </div>
+    </model-viewer>
+    
+
+  </body>
+</html>
